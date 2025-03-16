@@ -21,8 +21,8 @@ export const getTodo = async (req: Request, res: Response) => {
 
 export const createTodo = async (req: Request, res: Response) => {
   try {
-    const { title } = req.body;
-    const newTodo = new Todo({ title });
+    const { title, description } = req.body;
+    const newTodo = new Todo({ title, description });
     await newTodo.save();
     res.status(201).json(newTodo);
   } catch (error) {
@@ -36,6 +36,7 @@ export const updateTodo = async (req: Request, res: Response) => {
     const updatedTodo = await Todo.findByIdAndUpdate(id, req.body, { new: true });
     res.status(200).json(updatedTodo);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Error updating todo" });
   }
 };
